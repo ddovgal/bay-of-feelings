@@ -1,6 +1,6 @@
-# The felling bay
+# The bay of feelings
 
-The felling bay is a WS for people, who want to share their feelings.
+The bay of feelings is a place for people, who want to share their feelings.
 
 Project of [Dmitriy Dovgal] and [Serhiy Dmitruk]
 
