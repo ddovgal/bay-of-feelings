@@ -1,21 +1,23 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Tag {
+public class Addition {
 
     @Id
     @GeneratedValue
     private Long id;
 
     @NotNull
-    private String name;
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] data;
 
-    public Tag() {
+    public Addition() {
     }
 
     public Long getId() {
@@ -26,11 +28,11 @@ public class Tag {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public byte[] getData() {
+        return data;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }

@@ -1,7 +1,115 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
-/**
- * Created by Error_404 on 07.03.2016.
- */
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Commentary {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String text;
+
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date datetime;
+
+    private int ratio;
+
+    @NotNull
+    @ManyToOne
+    private User author;
+
+    @ManyToOne
+    private Commentary parent;
+
+    @OneToMany
+    @JoinTable(
+            name = "commentary_additions",
+            joinColumns = @JoinColumn(name = "commentary_id"),
+            inverseJoinColumns = @JoinColumn(name = "addition_id")
+    )
+    private Set<Addition> additions = new HashSet<>();
+
+    private boolean isVisibleForEveryone;
+
+    public Commentary() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
+
+    public int getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public Commentary getParent() {
+        return parent;
+    }
+
+    public void setParent(Commentary parent) {
+        this.parent = parent;
+    }
+
+    public Set<Addition> getAdditions() {
+        return additions;
+    }
+
+    public void setAdditions(Set<Addition> additions) {
+        this.additions = additions;
+    }
 }
