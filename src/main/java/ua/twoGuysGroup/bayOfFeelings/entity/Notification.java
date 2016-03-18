@@ -24,10 +24,17 @@ public class Notification {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String message;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "causePost_id")
     private Post causePost;
+
+    @ManyToOne
+    @JoinColumn(name = "causeCommentary_id")
+    private Commentary causeCommentary;
+
+    @ManyToOne
+    @JoinColumn(name = "causeUser_id")
+    private User causeUser;
 
     private boolean isRead;
 

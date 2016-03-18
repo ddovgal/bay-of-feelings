@@ -1,7 +1,6 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,7 +28,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "fav_posts",
+            name = "favourite_posts",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
@@ -48,7 +47,7 @@ public class User {
 
     private int ratio;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  //todo check if correct format
+    @Temporal(TemporalType.DATE)
     @NotNull
     private Date registrationDate;
 

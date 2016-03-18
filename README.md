@@ -22,6 +22,7 @@ Project of [Dmitriy Dovgal] and [Serhiy Dmitruk]
 
 ### Todos
 
+ - check if everywhere correct cascade types/or they exists if needed
  - ...
 
 

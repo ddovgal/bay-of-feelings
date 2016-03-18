@@ -1,7 +1,5 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -27,15 +25,15 @@ public class Post {
     private String text;
 
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  //todo check if correct format
+    @Temporal(TemporalType.TIMESTAMP)
     private Date datetime;
 
     private int ratio;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private Set<Commentary> commentaries = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "post_additions",
             joinColumns = @JoinColumn(name = "post_id"),
