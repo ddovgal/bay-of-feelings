@@ -29,9 +29,11 @@ public class Commentary {
 
     @NotNull
     @ManyToOne
+    @Column(name = "author_id")
     private User author;
 
     @ManyToOne
+    @Column(name = "parent_id")
     private Commentary parent;
 
     @OneToMany(cascade = CascadeType.REMOVE)
