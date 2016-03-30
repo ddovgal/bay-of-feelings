@@ -81,6 +81,22 @@ public class Notification {
         this.causePost = causePost;
     }
 
+    public Commentary getCauseCommentary() {
+        return causeCommentary;
+    }
+
+    public void setCauseCommentary(Commentary causeCommentary) {
+        this.causeCommentary = causeCommentary;
+    }
+
+    public User getCauseUser() {
+        return causeUser;
+    }
+
+    public void setCauseUser(User causeUser) {
+        this.causeUser = causeUser;
+    }
+
     public boolean isRead() {
         return isRead;
     }

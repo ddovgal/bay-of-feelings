@@ -34,16 +34,21 @@ public class User {
     )
     private Set<Post> favouritePosts = new HashSet<>();
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(
             name = "subscribers",
             joinColumns = @JoinColumn(name = "authority_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id")
     )
-    private Set<User> subscribers = new HashSet<>();
+    private Set<User> subscribers = new HashSet<>();*/
 
-    @ManyToMany(mappedBy = "subscribers")
-    private Set<User> favouriteUsers = new HashSet<>();
+    @ManyToMany/*(mappedBy = "subscribers")*/
+    @JoinTable(
+            name = "subscribers",
+            joinColumns = @JoinColumn(name = "subscriber_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    private Set<User> subscriptionsToUsers = new HashSet<>();
 
     private int ratio;
 
@@ -104,20 +109,20 @@ public class User {
         this.favouritePosts = favouritePosts;
     }
 
-    public Set<User> getSubscribers() {
+    /*public Set<User> getSubscribers() {
         return subscribers;
     }
 
     public void setSubscribers(Set<User> subscribers) {
         this.subscribers = subscribers;
+    }*/
+
+    public Set<User> getSubscriptionsToUsers() {
+        return subscriptionsToUsers;
     }
 
-    public Set<User> getFavouriteUsers() {
-        return favouriteUsers;
-    }
-
-    public void setFavouriteUsers(Set<User> favouriteUsers) {
-        this.favouriteUsers = favouriteUsers;
+    public void setSubscriptionsToUsers(Set<User> subscriptionsToUsers) {
+        this.subscriptionsToUsers = subscriptionsToUsers;
     }
 
     public int getRatio() {

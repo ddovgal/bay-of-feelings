@@ -7,5 +7,13 @@ public interface NotificationService {
 
     Notification save(Notification notification);
 
+    Notification save(Notification notification,
+                      String type,
+                      Long receiverId,
+                      Long postId,
+                      Long commentaryId,
+                      Long userId
+    );
+
     void deleteById(Long id);
 }

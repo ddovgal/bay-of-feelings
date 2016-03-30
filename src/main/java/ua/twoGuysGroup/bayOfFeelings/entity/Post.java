@@ -30,8 +30,8 @@ public class Post {
 
     private int ratio;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private Set<Commentary> commentaries = new HashSet<>();
+    /*@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private Set<Commentary> commentaries = new HashSet<>();*/
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
@@ -41,6 +41,7 @@ public class Post {
     )
     private Set<Addition> additions = new HashSet<>();
 
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "post_tags",
@@ -105,13 +106,13 @@ public class Post {
         this.ratio = ratio;
     }
 
-    public Set<Commentary> getCommentaries() {
+    /*public Set<Commentary> getCommentaries() {
         return commentaries;
     }
 
     public void setCommentaries(Set<Commentary> commentaries) {
         this.commentaries = commentaries;
-    }
+    }*/
 
     public Set<Addition> getAdditions() {
         return additions;

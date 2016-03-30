@@ -29,11 +29,11 @@ public class Commentary {
 
     @NotNull
     @ManyToOne
-    @Column(name = "author_id")
+    @JoinColumn(name = "author_id")
     private User author;
 
     @ManyToOne
-    @Column(name = "parent_id")
+    @JoinColumn(name = "parent_id")
     private Commentary parent;
 
     @OneToMany(cascade = CascadeType.REMOVE)
@@ -44,7 +44,7 @@ public class Commentary {
     )
     private Set<Addition> additions = new HashSet<>();
 
-    private boolean isVisibleForEveryone;
+    private boolean isVisibleOnlyForAuthor;
 
     public Commentary() {
     }
@@ -111,5 +111,13 @@ public class Commentary {
 
     public void setAdditions(Set<Addition> additions) {
         this.additions = additions;
+    }
+
+    public boolean isVisibleOnlyForAuthor() {
+        return isVisibleOnlyForAuthor;
+    }
+
+    public void setVisibleOnlyForAuthor(boolean visibleOnlyForAuthor) {
+        isVisibleOnlyForAuthor = visibleOnlyForAuthor;
     }
 }

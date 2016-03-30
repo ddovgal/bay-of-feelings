@@ -1,4 +1,4 @@
-package ua.twoGuysGroup.bayOfFeelings.controller.rest;
+package ua.twoGuysGroup.bayOfFeelings.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
