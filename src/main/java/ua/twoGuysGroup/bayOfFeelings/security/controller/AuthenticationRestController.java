@@ -7,15 +7,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ua.twoGuysGroup.bayOfFeelings.security.jwt.JwtAuthenticationRequest;
-import ua.twoGuysGroup.bayOfFeelings.security.jwt.JwtAuthenticationResponse;
 import ua.twoGuysGroup.bayOfFeelings.security.jwt.JwtTokenUtil;
+import ua.twoGuysGroup.bayOfFeelings.security.jwt.JwtUserDetails;
 
 @RestController
 @RequestMapping("/auth")
@@ -43,10 +42,39 @@ public class AuthenticationRestController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-security so we can generate token
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getLogin());
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        final JwtUserDetails userDetails = (JwtUserDetails)
+                userDetailsService.loadUserByUsername(authenticationRequest.getLogin());
 
         // Return the token
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(
+                userDetails.getId(),
+                userDetails.getUsername(),
+                jwtTokenUtil.generateToken(userDetails)
+        ));
+    }
+
+    private class JwtAuthenticationResponse {
+
+        private final Long userId;
+        private final String userLogin;
+        private final String token;
+
+        JwtAuthenticationResponse(Long userId, String userLogin, String token) {
+            this.userId = userId;
+            this.userLogin = userLogin;
+            this.token = token;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public String getUserLogin() {
+            return userLogin;
+        }
+
+        public String getToken() {
+            return token;
+        }
     }
 }

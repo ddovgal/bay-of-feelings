@@ -1,6 +1,9 @@
 package ua.twoGuysGroup.bayOfFeelings.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.twoGuysGroup.bayOfFeelings.entity.Post;
@@ -8,6 +11,7 @@ import ua.twoGuysGroup.bayOfFeelings.repository.*;
 import ua.twoGuysGroup.bayOfFeelings.service.PostService;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -111,5 +115,10 @@ public class PostServiceSpringDataImpl implements PostService {
         Post post = getById(id);
         post.setText(newText);
         return update(post);
+    }
+
+    @Override
+    public Page<Post> getPageBySpecification(List<Specification<Post>> specification, Boolean conjunction, Pageable pageable) {
+        return null; //todo
     }
 }

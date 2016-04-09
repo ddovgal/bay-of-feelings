@@ -2,19 +2,21 @@ package ua.twoGuysGroup.bayOfFeelings.service;
 
 
 import ua.twoGuysGroup.bayOfFeelings.entity.User;
+import ua.twoGuysGroup.bayOfFeelings.service.general.GeneralService;
+import ua.twoGuysGroup.bayOfFeelings.service.general.PageableAccessService;
 
-public interface UserService {
-    User getById(Long id);
+public interface UserService extends GeneralService<User, Long>, PageableAccessService<User> {
+    //User getById(Long id);
 
     User getByLogin(String login);
 
-    User save(User user);
+    //User save(User user);
 
     User replace(User newUser, Long id);
 
-    void deleteById(Long id);
+    //void deleteById(Long id);
 
-    void delete(User user);
+    //void delete(User user);
 
     User setAvatar(byte[] avatar, Long id);
 
@@ -33,4 +35,6 @@ public interface UserService {
     User changePassword(String newPassword, Long userId);
 
     User changeEmail(String newEmail, Long userId);
+
+    //Page<User> getPageBySpecification(List<Specification<User>> specification, Boolean conjunction, Pageable pageable);
 }

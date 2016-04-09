@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ua.twoGuysGroup.bayOfFeelings.entity.User;
+import ua.twoGuysGroup.bayOfFeelings.exception.RegistrationException;
 import ua.twoGuysGroup.bayOfFeelings.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.util.Map;
 @RequestMapping(value = "/register", method = RequestMethod.POST)
 public class RegistrationRestController {
 
-    @Value("${user.register-location-path}")
+    @Value("${user.register.location-path}")
     private String USERS_PATH;
 
     @Autowired
@@ -39,7 +40,7 @@ public class RegistrationRestController {
             String email,
             @RequestParam(required = false) MultipartFile avatar
     ) throws Exception {
-        if (isInUse(login)) throw new Exception("Such login is already in use");
+        if (isInUse(login)) throw new RegistrationException("Such login is already in use");
         User newUser = new User();
         newUser.setLogin(login);
         newUser.setEmail(email);

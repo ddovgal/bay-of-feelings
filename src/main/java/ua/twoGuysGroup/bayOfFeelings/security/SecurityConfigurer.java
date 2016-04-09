@@ -3,6 +3,7 @@ package ua.twoGuysGroup.bayOfFeelings.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -55,17 +56,22 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter { //todo co
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 // we don't need CSRF because our token is invulnerable
-                .csrf().disable() //todo enable because not always entered
+                .csrf().disable()
 
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 
                 // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
+                // set only secure needed URLs by fullyAuthenticated()
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.POST, "/tmp/hw").permitAll()
-                .antMatchers("/register/**").permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/{id}/subscription").fullyAuthenticated()
+                .antMatchers(HttpMethod.POST, "/users/{id}/ratio").fullyAuthenticated()
+                .antMatchers("/users/{id}").fullyAuthenticated()
+
+                // don't secure all, except URLs above
+                // "/register/**" and "/auth/**" included
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter

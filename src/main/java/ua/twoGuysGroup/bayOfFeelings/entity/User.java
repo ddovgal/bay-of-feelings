@@ -1,6 +1,7 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     @Id
@@ -23,8 +25,8 @@ public class User {
     @NotNull
     private String email;
 
-    @JsonIgnore
     @Column(columnDefinition = "MEDIUMBLOB")
+    @JsonIgnore
     private byte[] avatar;
 
     @ManyToMany
@@ -33,6 +35,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
+    @JsonIgnore
     private Set<Post> favouritePosts = new HashSet<>();
 
     /*@ManyToMany
@@ -49,6 +52,7 @@ public class User {
             joinColumns = @JoinColumn(name = "subscriber_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id")
     )
+    @JsonIgnore
     private Set<User> subscriptionsToUsers = new HashSet<>();
 
     private int ratio;

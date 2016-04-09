@@ -53,4 +53,9 @@ public class NotificationServiceSpringDataImpl implements NotificationService {
     public void deleteById(Long id) {
         notificationRepository.delete(id);
     }
+
+    @Override
+    public void delete(Notification var) {
+        notificationRepository.delete(var);
+    }
 }

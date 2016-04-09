@@ -1,5 +1,8 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -7,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Commentary {
 
     @Id
@@ -16,6 +20,7 @@ public class Commentary {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     private Post post;
 
     @Column(columnDefinition = "LONGTEXT")

@@ -1,9 +1,12 @@
 package ua.twoGuysGroup.bayOfFeelings.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Notification {
 
     @Id
@@ -35,8 +38,6 @@ public class Notification {
     @ManyToOne
     @JoinColumn(name = "causeUser_id")
     private User causeUser;
-
-    private boolean isRead;
 
     public Notification() {
     }
@@ -95,13 +96,5 @@ public class Notification {
 
     public void setCauseUser(User causeUser) {
         this.causeUser = causeUser;
-    }
-
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
     }
 }

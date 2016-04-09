@@ -1,6 +1,9 @@
 package ua.twoGuysGroup.bayOfFeelings.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.twoGuysGroup.bayOfFeelings.entity.Post;
@@ -8,8 +11,10 @@ import ua.twoGuysGroup.bayOfFeelings.entity.User;
 import ua.twoGuysGroup.bayOfFeelings.repository.PostRepository;
 import ua.twoGuysGroup.bayOfFeelings.repository.UserRepository;
 import ua.twoGuysGroup.bayOfFeelings.service.UserService;
+import ua.twoGuysGroup.bayOfFeelings.service.specification.SpecificationBuilder;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,7 +25,6 @@ public class UserServiceSpringDataImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
-
 
     @Override
     public User getById(Long id) {
@@ -125,5 +129,11 @@ public class UserServiceSpringDataImpl implements UserService {
         User user = getById(userId);
         user.setEmail(newEmail);
         return update(user);
+    }
+
+    @Override
+    public Page<User> getPageBySpecification(List<Specification<User>> specification, Boolean conjunction, Pageable pageable) {
+        SpecificationBuilder<User> builder = new SpecificationBuilder<>(specification);
+        return userRepository.findAll(conjunction ? builder.buildByConjunction() : builder.buildByDisjunction(), pageable);
     }
 }
